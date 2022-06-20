@@ -15,6 +15,12 @@ public class LevelEditor : EditorWindow
 
     GameObject SelectedTile;
 
+    string TileManagerAssetPath = "Manager";
+    string TileAssetPath = "Tile";
+    float TilePadding = 1.333f; //distance between tiles (must equal wall-joint piece) //this could be moved to tile class
+
+    GameObject manager;
+
     [MenuItem("Tools/Level Builder")]
     public static void init()
     {
@@ -50,18 +56,15 @@ public class LevelEditor : EditorWindow
 
         if (GUILayout.Button("Complete"))
         {
-            for (int i = 0; i < TraversableTiles.Count; i++)
-            {
-                Debug.Log(TraversableTiles[i]);
-            }
-
             for(int x=0; x < levelDimensions; x++)
             {
                 for (int z=0; z < levelDimensions; z++)
                 {
                     if (!TraversableTiles.Contains(Tiles[x, z]))
                     {
-                        DestroyImmediate(Tiles[x,z]); //Dangerous!
+                        Tiles[x, z].AddComponent<NonTraversableTile>();
+                        //ignore destroy -> add derived class from tileobject for non-assigned
+                        //DestroyImmediate(Tiles[x,z]); //Dangerous!
                     }
                     else
                     {
@@ -73,12 +76,12 @@ public class LevelEditor : EditorWindow
                         {
                             Tiles[x, z].GetComponents<TileObject>()[i].x = x;
                         }
-
-
                     }
+                    Tiles[x, z].GetComponent<TileObject>().TileInitialization(x, z); //->all but instantiation should take place on complete
+
                 }
             }
-            manager.GetComponent<Manager>().TileManagerInitialization(TraversableTiles, levelDimensions);
+            manager.GetComponent<Manager>().TileManagerInitialization(TraversableTiles, levelDimensions, Tiles);
         }
 
 
@@ -87,14 +90,6 @@ public class LevelEditor : EditorWindow
 
         SelectedTile = Selection.activeGameObject;
     }
-
-
-    string TileManagerAssetPath = "Manager";
-    string TileAssetPath = "Tile";
-    float TilePadding = 1.333f; //distance between tiles (must equal wall-joint piece)
-
-    GameObject manager;
-
 
     private void Generate()
     {
@@ -118,18 +113,17 @@ public class LevelEditor : EditorWindow
             for(int y=0; y < levelDimensions; y++)
             {             
                 GameObject newTile = Instantiate(Resources.Load (TileAssetPath) as GameObject);
-                newTile.name = "X" + x + "Y" + y;
                 newTile.transform.position = new Vector3(x * (TilePadding), 0, y * (TilePadding));
                 newTile.transform.SetParent(manager.transform);
 
                 Tiles[x, y] = newTile;
                 
-                newTile.GetComponent<TileObject>().TileInitialization(x,y); //->all but instantiation should take place on complete
+                
             }
         }
 
         
-
+        
     }
     
 }

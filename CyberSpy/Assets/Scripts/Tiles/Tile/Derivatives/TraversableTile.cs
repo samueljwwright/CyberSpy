@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TraversableTile : TileObject
 {
-    //add to assigned tiles -> add default to unasigend tiles
-    public bool[] ConnectingTiles;
+    public bool[] ConnectingTiles; //0=-X, 1=+X, 2=-Z, 3=+Z
+
 
 }
