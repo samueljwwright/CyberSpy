@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NonTraversableTile : TileObject
 {
-
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
 
 }

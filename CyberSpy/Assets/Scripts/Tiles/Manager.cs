@@ -12,6 +12,8 @@ public class Manager : MonoBehaviour
     private float TileMidPoint = 0.666f;
 
     //run-time variables
+    public List<GameObject>[] LevelSides = new List<GameObject>[4]; // N,E,S,W
+    public List<GameObject> ExteriorWalls = new List<GameObject>(); //ADDED IN INSPECTOR ATM
 
     public void TileManagerInitialization(List<GameObject> ActiveTiles, int LevelDimensions, GameObject[,] tiles)
     {
@@ -67,9 +69,8 @@ public class Manager : MonoBehaviour
 
     private void Awake()
     {
-        for (int i=0; i < ConnectionNodes.Count; i++)
+        for (int i=0; i < ConnectionNodes.Count; i++) //DESTROY CONNECTION NODE OBJECTS
         {
-            Debug.Log(ConnectionNodes[i]);
             Destroy(ConnectionNodes[i]);
         }
     }
