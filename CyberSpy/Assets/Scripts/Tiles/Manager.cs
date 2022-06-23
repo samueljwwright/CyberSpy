@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Manager : MonoBehaviour
 {
     //editor script cannot be used at runtime -> list of tiles is moved here after level is "completed" using editor window
@@ -11,12 +12,34 @@ public class Manager : MonoBehaviour
     private List<GameObject> ConnectionNodes = new List<GameObject>(); //ONLY WORKS WHEN SERIALIZED (I DON'T KNOW WHY :D)
     private float TileMidPoint = 0.666f;
 
-    //run-time variables
+    //run-time variables'
+    [SerializeField]
+    //MULTIDEMENSIONAL ARRAYS CANNOT BE SERIALIZED...!
+    public GameObject[] AllTiles;
+
+    public int LevelDimensions;
+
     public List<GameObject>[] LevelSides = new List<GameObject>[4]; // N,E,S,W
     public List<GameObject> ExteriorWalls = new List<GameObject>(); //ADDED IN INSPECTOR ATM
 
-    public void TileManagerInitialization(List<GameObject> ActiveTiles, int LevelDimensions, GameObject[,] tiles)
+    
+
+    public void TileManagerInitialization(List<GameObject> ActiveTiles, int levelDimensions, GameObject[,] tiles)
     {
+
+        LevelDimensions = levelDimensions; //TEMP
+
+        AllTiles = new GameObject[levelDimensions * levelDimensions];
+
+        //MAKE DEDICATED METHOD FOR THIS RETURN ARR -> PARAMS(ARR, 2DARR, LEVELDIMENSIONS(FROM ARR.LENGTH))
+        for (int x=0; x < levelDimensions; x++)
+        {
+            for(int z=0; z < levelDimensions; z++)
+            {
+                AllTiles[x == 0 ? x + z : z + (levelDimensions * x) ] = tiles[x,z];
+            }
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////// Could re-build the 2d array at runtime
 
         for (int x=0; x < LevelDimensions; x++)
         {
@@ -38,7 +61,7 @@ public class Manager : MonoBehaviour
                         ConnectionNodes.Add(ConnectionNode);
                         //DRAW NODE X
 
-                        Debug.Log(tiles[x, z].name + " " + tiles[x-1, z].name);
+                        //Debug.Log(tiles[x, z].name + " " + tiles[x-1, z].name);
                     }
                     
                 }
@@ -59,7 +82,7 @@ public class Manager : MonoBehaviour
                         ConnectionNodes.Add(ConnectionNode);
                         //DRAW NODE Z
 
-                        Debug.Log(tiles[x, z].name + " " + tiles[x, z - 1].name);
+                        //Debug.Log(tiles[x, z].name + " " + tiles[x, z - 1].name);
                     }
                 }
             }
@@ -73,5 +96,6 @@ public class Manager : MonoBehaviour
         {
             Destroy(ConnectionNodes[i]);
         }
+        Debug.Log(LevelDimensions);
     }
 }
