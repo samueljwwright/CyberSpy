@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3515336630251312000}
   m_Layer: 0
   m_Name: Manager
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0e85375e546814fbbe4e504ba73164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConnectionNodes: []
+  AllTiles: []
+  LevelDimensions: 0
+  ExteriorWalls: []
 --- !u!114 &3515336630251312000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,3 +60,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8391fcf15f45064d817e736b87bdb52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: 10

@@ -31,15 +31,24 @@ public class Manager : MonoBehaviour
 
         AllTiles = new GameObject[levelDimensions * levelDimensions];
 
-        //MAKE DEDICATED METHOD FOR THIS RETURN ARR -> PARAMS(ARR, 2DARR, LEVELDIMENSIONS(FROM ARR.LENGTH))
+        //MAKE DEDICATED METHOD FOR THIS TwoDimensionalArrToARETURN ARR -> PARAMS(ARR, 2DARR, LEVELDIMENSIONS(FROM ARR.LENGTH))
         for (int x=0; x < levelDimensions; x++)
         {
             for(int z=0; z < levelDimensions; z++)
             {
-                AllTiles[x == 0 ? x + z : z + (levelDimensions * x) ] = tiles[x,z];
+                AllTiles[x == 0 ? x + z : z + (levelDimensions * x)] = tiles[x,z];
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////// Could re-build the 2d array at runtime
+        ///
+
+        //GameObject[,] Test = ArrayToTwoDimensionalArray(AllTiles);         
+
+
+
+
+
+
 
         for (int x=0; x < LevelDimensions; x++)
         {
@@ -49,8 +58,15 @@ public class Manager : MonoBehaviour
                 {
                     if (ActiveTiles.Contains(tiles[x - 1, z])) //if -x is assigned
                     {
-                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[0] = true; //ERROR! SCRPT NOT ATTATCHED TO OBJECT AT TIME OF THIS _>problem with contil
+                        //REMOVE AFTER IMPLEMENTING GAMEOBJECT ARRAY// & DUPLICATED LINES BELOW
+                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[0] = true; 
                         tiles[x - 1, z].GetComponent<TraversableTile>().ConnectingTiles[1] = true;
+                        //
+                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTileObjects[0] = tiles[x - 1, z];
+                        tiles[x - 1, z].GetComponent<TraversableTile>().ConnectingTileObjects[1] = tiles[x, z];
+
+
+
 
                         //DRAW NODE X (repetetive)
                         GameObject ConnectionNode = Instantiate(Resources.Load("ConnectionNode")) as GameObject;
@@ -70,8 +86,13 @@ public class Manager : MonoBehaviour
                 {
                     if (ActiveTiles.Contains(tiles[x, z - 1]))
                     {
+                        //* REMOVE AFTER IMPLEMENTING OBJECTS
                         tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[2] = true;
                         tiles[x, z - 1].GetComponent<TraversableTile>().ConnectingTiles[3] = true;
+                        //
+                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTileObjects[2] = tiles[x, z-1];
+                        tiles[x, z - 1].GetComponent<TraversableTile>().ConnectingTileObjects[3] = tiles[x, z]; 
+
 
                         //DRAW NODE Z
                         GameObject ConnectionNode = Instantiate(Resources.Load("ConnectionNode")) as GameObject;
@@ -89,6 +110,13 @@ public class Manager : MonoBehaviour
             
         }
     }
+
+    //private GameObject[] TwoDimensionalArrayToArray()
+    //{
+    //
+    //}
+
+    
 
     private void Awake()
     {

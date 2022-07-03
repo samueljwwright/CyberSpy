@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
         CurrentTile = DestinationTile;
         transform.position = new Vector3(
             DestinationTile.transform.position.x,
-            DestinationTile.transform.position.y + transform.lossyScale.y,
+            DestinationTile.transform.position.y + transform.lossyScale.y, // (destinationtile.lossyscale.y / 2)
             DestinationTile.transform.position.z);
     }
 
@@ -26,4 +26,5 @@ public class Character : MonoBehaviour
     {
         
     }
+
 }
