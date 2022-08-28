@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour
     public List<GameObject>[] LevelSides = new List<GameObject>[4]; // N,E,S,W
     public List<GameObject> ExteriorWalls = new List<GameObject>(); //ADDED IN INSPECTOR ATM
 
-    
+
 
     public void TileManagerInitialization(List<GameObject> ActiveTiles, int levelDimensions, GameObject[,] tiles)
     {
@@ -32,11 +32,11 @@ public class Manager : MonoBehaviour
         AllTiles = new GameObject[levelDimensions * levelDimensions];
 
         //MAKE DEDICATED METHOD FOR THIS TwoDimensionalArrToARETURN ARR -> PARAMS(ARR, 2DARR, LEVELDIMENSIONS(FROM ARR.LENGTH))
-        for (int x=0; x < levelDimensions; x++)
+        for (int x = 0; x < levelDimensions; x++)
         {
-            for(int z=0; z < levelDimensions; z++)
+            for (int z = 0; z < levelDimensions; z++)
             {
-                AllTiles[x == 0 ? x + z : z + (levelDimensions * x)] = tiles[x,z];
+                AllTiles[x == 0 ? x + z : z + (levelDimensions * x)] = tiles[x, z];
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////// Could re-build the 2d array at runtime
@@ -50,16 +50,16 @@ public class Manager : MonoBehaviour
 
 
 
-        for (int x=0; x < LevelDimensions; x++)
+        for (int x = 0; x < LevelDimensions; x++)
         {
-            for (int z=0; z < LevelDimensions; z++)
+            for (int z = 0; z < LevelDimensions; z++)
             {
-                if (x != 0 && x < LevelDimensions && ActiveTiles.Contains(tiles[x, z])) 
+                if (x != 0 && x < LevelDimensions && ActiveTiles.Contains(tiles[x, z]))
                 {
                     if (ActiveTiles.Contains(tiles[x - 1, z])) //if -x is assigned
                     {
                         //REMOVE AFTER IMPLEMENTING GAMEOBJECT ARRAY// & DUPLICATED LINES BELOW
-                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[0] = true; 
+                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[0] = true;
                         tiles[x - 1, z].GetComponent<TraversableTile>().ConnectingTiles[1] = true;
                         //
                         tiles[x, z].GetComponent<TraversableTile>().ConnectingTileObjects[0] = tiles[x - 1, z];
@@ -79,7 +79,7 @@ public class Manager : MonoBehaviour
 
                         //Debug.Log(tiles[x, z].name + " " + tiles[x-1, z].name);
                     }
-                    
+
                 }
 
                 if (z != 0 && z < LevelDimensions && ActiveTiles.Contains(tiles[x, z]))
@@ -90,8 +90,8 @@ public class Manager : MonoBehaviour
                         tiles[x, z].GetComponent<TraversableTile>().ConnectingTiles[2] = true;
                         tiles[x, z - 1].GetComponent<TraversableTile>().ConnectingTiles[3] = true;
                         //
-                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTileObjects[2] = tiles[x, z-1];
-                        tiles[x, z - 1].GetComponent<TraversableTile>().ConnectingTileObjects[3] = tiles[x, z]; 
+                        tiles[x, z].GetComponent<TraversableTile>().ConnectingTileObjects[2] = tiles[x, z - 1];
+                        tiles[x, z - 1].GetComponent<TraversableTile>().ConnectingTileObjects[3] = tiles[x, z];
 
 
                         //DRAW NODE Z
@@ -107,7 +107,7 @@ public class Manager : MonoBehaviour
                     }
                 }
             }
-            
+
         }
     }
 
@@ -116,14 +116,45 @@ public class Manager : MonoBehaviour
     //
     //}
 
-    
+    public GameObject player;
+    public GameObject[] Enemies;
+
+    private void FixedUpdate()
+    {
+        //if (PlayerMove)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    for(int i=0; i < Enemies.Length; i++)
+        //    {
+        //if player tile is defended e.t.c
+        //    }
+        //}
+
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            for (int j = 0; j < Enemies[i].GetComponent<Enemy>().DefendedTiles.Count; j++)
+            {
+                if (player.GetComponent<Character>().CurrentTile == Enemies[i].GetComponent<Enemy>().DefendedTiles[j])
+                {
+                    Debug.Log("CheckMate! " + Enemies[i].name);
+                }
+            }
+        }
+    }
+
 
     private void Awake()
     {
-        for (int i=0; i < ConnectionNodes.Count; i++) //DESTROY CONNECTION NODE OBJECTS
+        for (int i = 0; i < ConnectionNodes.Count; i++) //DESTROY CONNECTION NODE OBJECTS
         {
             Destroy(ConnectionNodes[i]);
         }
-        Debug.Log(LevelDimensions);
+
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        Enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 }
