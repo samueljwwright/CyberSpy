@@ -139,7 +139,7 @@ public class Manager : MonoBehaviour
             {
                 if (player.GetComponent<Character>().CurrentTile == Enemies[i].GetComponent<Enemy>().DefendedTiles[j])
                 {
-                    Debug.Log("CheckMate! " + Enemies[i].name);
+                    Debug.Log("CheckMate! " + Enemies[i].name); 
                 }
             }
         }

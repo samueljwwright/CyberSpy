@@ -5,6 +5,9 @@ using UnityEngine;
 public class Enemy_Adjacent : Enemy
 {
 
+    
+
+
     //Return tiles that are of the same row or column
     public override void GetAllDefendedTiles()
     {
