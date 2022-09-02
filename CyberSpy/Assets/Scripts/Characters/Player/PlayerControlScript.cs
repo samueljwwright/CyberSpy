@@ -10,6 +10,8 @@ public class PlayerControlScript : MonoBehaviour
     [SerializeField]
     private GameObject Player; //refactor selectedTileIsAccesable to use this variable....
 
+    public GameObject Manager;
+
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -27,6 +29,7 @@ public class PlayerControlScript : MonoBehaviour
             {    
                 if (Input.GetMouseButtonDown(0) && SelectedTileIsAccessable(hit.transform.gameObject))
                 {
+                    Manager.GetComponent<Manager>().MoveCounter++;
                     Player.GetComponent<Player>().CharacterMove(DestinationTile);
                 }
             }

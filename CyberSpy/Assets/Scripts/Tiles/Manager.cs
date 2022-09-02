@@ -22,6 +22,8 @@ public class Manager : MonoBehaviour
     public List<GameObject>[] LevelSides = new List<GameObject>[4]; // N,E,S,W
     public List<GameObject> ExteriorWalls = new List<GameObject>(); //ADDED IN INSPECTOR ATM
 
+    public int MoveCounter;
+
 
 
     public void TileManagerInitialization(List<GameObject> ActiveTiles, int levelDimensions, GameObject[,] tiles)
@@ -143,6 +145,9 @@ public class Manager : MonoBehaviour
                 }
             }
         }
+
+
+        //Debug.Log(MoveCounter);
     }
 
 
