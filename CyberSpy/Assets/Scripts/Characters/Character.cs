@@ -12,10 +12,13 @@ public class Character : MonoBehaviour
     [Range(0, 3)]
     public int LookDirection; //0 = n, 1 = e, 2 = s , 3 = w
 
-
+    //manager
+    public GameObject ManagerObject;
 
     private void Start()
     {
+        ManagerObject = GameObject.FindWithTag("Manager");
+
         CharacterMove(StartingTile);
         
         FaceDirectionOfMovement(InputToDegree());

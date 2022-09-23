@@ -7,6 +7,10 @@ public class Enemy_Directional : Enemy
 
     public override void GetAllDefendedTiles()
     {
+        //Clear list if exists::
+        DefendedTiles.Clear();
+
+
         //add while loop for Max defence range?
          switch (LookDirection)
         {
@@ -46,7 +50,7 @@ public class Enemy_Directional : Enemy
                 break;
 
             default:
-                
+                Debug.Log("Direction out of bounds" + LookDirection);
                 break;
         }
     }
@@ -55,4 +59,5 @@ public class Enemy_Directional : Enemy
     {
         return this.CurrentTile.GetComponent<TileObject>().x * Mathf.RoundToInt(Mathf.Sqrt(ManagerObject.GetComponent<Manager>().AllTiles.Length))   + this.CurrentTile.GetComponent<TileObject>().y + a;
     }
+    
 }

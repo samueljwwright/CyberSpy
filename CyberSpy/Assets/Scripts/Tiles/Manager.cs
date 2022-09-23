@@ -121,33 +121,33 @@ public class Manager : MonoBehaviour
     public GameObject player;
     public GameObject[] Enemies;
 
+
     private void FixedUpdate()
     {
-        //if (PlayerMove)
-        //{
-        //    return;
-        //}
-        //else
-        //{
-        //    for(int i=0; i < Enemies.Length; i++)
-        //    {
-        //if player tile is defended e.t.c
-        //    }
-        //}
 
+        //THIS IS DETECTING PLAYER IN ALL ENEMIES DEFENDED TILES (SHOULD BE MOVED TO ENEMY SCRIPT)
+        
         for (int i = 0; i < Enemies.Length; i++)
-        {
+        { 
             for (int j = 0; j < Enemies[i].GetComponent<Enemy>().DefendedTiles.Count; j++)
             {
                 if (player.GetComponent<Character>().CurrentTile == Enemies[i].GetComponent<Enemy>().DefendedTiles[j])
                 {
-                    Debug.Log("CheckMate! " + Enemies[i].name); 
+                    //move to dedicated function for clarity! i.e. playerkilled method
+
+                    //Player
+                    player.GetComponent<Player>().enabled = false; //needs to disable player control script on camera obj
+                    
+
+                    //Enemy
+                    Debug.Log("CheckMate! " + Enemies[i].name);
+                    Enemies[i].GetComponent<Enemy>().CharacterMove(GetComponent<Manager>().player.GetComponent<Character>().CurrentTile);
+                    Enemies[i].GetComponent<Enemy>().GetAllDefendedTiles();
                 }
             }
         }
 
 
-        //Debug.Log(MoveCounter);
     }
 
 

@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingTile: {fileID: 1913924406}
   CurrentTile: {fileID: 1913924406}
-  LookDirection: 0
+  LookDirection: 1
   ManagerObject: {fileID: 947176791}
   DefendedTiles: []
 --- !u!136 &245140317
@@ -1951,6 +1951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  Manager: {fileID: 947176791}
 --- !u!1 &492709580
 GameObject:
   m_ObjectHideFlags: 0
@@ -3286,6 +3287,7 @@ MonoBehaviour:
   - {fileID: 1746960522}
   LevelDimensions: 6
   ExteriorWalls: []
+  MoveCounter: 0
   player: {fileID: 0}
   Enemies: []
 --- !u!4 &947176794
